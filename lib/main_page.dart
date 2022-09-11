@@ -10,9 +10,12 @@ class MainPage extends StatefulWidget {
   }
 }
 
-class _MainPageState extends State<MainPage>{
+class _MainPageState extends State<MainPage> {
   int _selectedTabIndex = 0;
 
+  // 4-1. 메인화면 - 서버로부터 받아올 영화 목록 데이터 변수 선언
+
+  // 4-2. 메인화면 - initState() 에서 영화 목록을 가져옵니다.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +25,7 @@ class _MainPageState extends State<MainPage>{
         actions: <Widget>[
           PopupMenuButton<int>(
             icon: const Icon(Icons.sort),
+            // 4-2. 메인화면 - value 에 따라 영화 목록 요청을 진행
             onSelected: (value) {
               if (value == 0)
                 print("예매율순");
@@ -49,7 +53,11 @@ class _MainPageState extends State<MainPage>{
           )
         ],
       ),
-      body: _selectedTabIndex == 0 ? ListPage() : GridPage(),
+      body: _selectedTabIndex == 0
+          // 4-2. 메인화면 - ListPage 에 영화 목록을 넘김
+          ? ListPage()
+          // 4-2. 메인화면 - GridPage 에 영화 목록을 넘김
+          : GridPage(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

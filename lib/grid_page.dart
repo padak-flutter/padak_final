@@ -5,7 +5,10 @@ import 'model/data/dummys_repository.dart';
 import 'model/response/movies_response.dart';
 
 class GridPage extends StatelessWidget {
+  // 4-2. 메인화면 - GridPage 매개변수 생성
   final List<Movie> movies = DummysRepository.loadDummyMovies();
+
+  // 4-2. 메인화면 - GridPage 생성자 만들기
 
   @override
   Widget build(BuildContext context) {
