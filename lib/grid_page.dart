@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:padak_starter/detail_page.dart';
-
-import 'model/data/dummys_repository.dart';
 import 'model/response/movies_response.dart';
 
 class GridPage extends StatelessWidget {
   // 4-2. 메인화면 - GridPage 매개변수 생성
-  final List<Movie> movies = DummysRepository.loadDummyMovies();
+  final List<Movie> movies;
+
+  // 4-2. 메인화면 - GridPage 생성자 만들기
+  const GridPage({
+    required this.movies,
+    super.key,
+  });
 
   // 4-2. 메인화면 - GridPage 생성자 만들기
 

@@ -7,14 +7,17 @@ import 'model/response/movies_response.dart';
 
 class ListPage extends StatelessWidget {
   // 4-2. 메인화면 - ListPage 매개변수 생성
+  final List<Movie> movies;
 
   // 4-2. 메인화면 - ListPage 생성자 만들기
+  const ListPage({
+    required this.movies,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     // 4-2. 메인화면 - movies 변수 삭제
-    final List<Movie> movies = DummysRepository.loadDummyMovies();
-
     return ListView.separated(
       separatorBuilder: (_, index) => const Divider(color: Colors.grey),
       itemCount: movies.length,

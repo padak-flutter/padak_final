@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:intl/intl.dart';
 import 'package:padak_starter/comment_page.dart';
+import 'package:padak_starter/dataSource/movie_data_source.dart';
 import 'package:padak_starter/model/data/dummys_repository.dart';
 import 'package:padak_starter/model/widget/star_rating_bar.dart';
 
@@ -32,19 +33,50 @@ class _DetailState extends State<DetailPage> {
     movieId = widget.movieId;
 
     // 5-1. 상세화면 - initState() 에서 영화 상세 데이터를 가져옵니다.
+    MovieDataSource.requestMovie(movieId).then((response) {
+      setState(() {
+        _movieResponse = response;
+      });
+    }).catchError((error) {
+      const snackBar = SnackBar(
+        content: Text('API 오류가 발생했습니다. 불편을 막기 위해 더미 데이터를 띄웁니다.'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      setState(() {
+        _movieResponse = DummysRepository.loadDummyMovie(movieId);
+      });
+    });
 
     // 5-2. 상세화면 - initState() 에서 영화 한줄평 목록을 가져옵니다.
+    MovieDataSource.requestComments(movieId).then((response) {
+      setState(() {
+        _commentsResponse = response;
+      });
+    }).catchError((error) {
+      const snackBar = SnackBar(
+        content: Text('API 오류가 발생했습니다. 댓글을 띄우지 않습니다.'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      setState(() {
+        _commentsResponse = null;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    _movieResponse = DummysRepository.loadDummyMovie(movieId);
     // 5-2. 상세화면 - 한줄평 목록 더미 삭제
-    _commentsResponse = DummysRepository.loadComments(movieId);
 
     if (_movieResponse == null) {
       // 5-1. 상세화면 - 데이터를 받아오고 있을 때는 CircleProgressBar 를 띄워줌
-      return const SizedBox();
+      return const ColoredBox(
+        color: Colors.white,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     } else {
       return Scaffold(
         appBar: AppBar(
