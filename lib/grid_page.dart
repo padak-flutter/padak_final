@@ -12,6 +12,8 @@ class GridPage extends StatelessWidget {
     super.key,
   });
 
+  // 4-2. 메인화면 - GridPage 생성자 만들기
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
